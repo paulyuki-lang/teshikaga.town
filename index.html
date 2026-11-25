@@ -7,117 +7,185 @@
 <title>てしかが冒険クエスト</title>
 
 <style>
-* {
-  box-sizing: border-box;
+* { box-sizing: border-box; }
+
+:root {
+  --green: #315c42;
+  --gold: #d5ad53;
+  --cream: #fffdf3;
 }
 
 body {
   margin: 0;
+  color: #304b39;
   font-family: "Hiragino Maru Gothic ProN", "Meiryo", sans-serif;
-  background: #edf3e3;
-  color: #354b39;
+  background: linear-gradient(#dcefe9, #edf2d9);
+  min-height: 100vh;
 }
 
 header {
-  background: linear-gradient(135deg, #244c3c, #528653);
-  color: white;
+  position: relative;
   text-align: center;
-  padding: 25px 12px;
-  border-bottom: 6px solid #d9b66c;
+  padding: 24px 15px 32px;
+  color: white;
+  background: linear-gradient(145deg, #193f35, #57885b);
+  border-bottom: 5px solid var(--gold);
 }
 
-h1 {
-  margin: 0;
-  font-size: clamp(25px, 5vw, 42px);
-  letter-spacing: 3px;
+header h1 {
+  font-size: clamp(25px, 5vw, 44px);
+  margin: 16px 0 8px;
 }
 
-header p {
-  font-size: 14px;
-  margin-bottom: 0;
+header p { margin: 8px; }
+
+.language {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+select {
+  padding: 8px 12px;
+  border: 1px solid #b5c7b0;
+  border-radius: 10px;
+  background: #fffdf3;
+  color: #315c42;
+  font-size: 15px;
 }
 
 main {
-  max-width: 1100px;
+  max-width: 1150px;
   margin: auto;
   padding: 16px;
 }
 
 .panel {
-  background: #fffdf4;
-  border: 3px solid #c5b58a;
-  border-radius: 18px;
+  background: var(--cream);
+  border: 2px solid #c3c7a4;
+  border-radius: 20px;
   padding: 18px;
-  margin-bottom: 16px;
-  box-shadow: 0 5px 0 #c5cdb8;
+  margin-bottom: 18px;
+  box-shadow: 0 5px 15px #284c3215;
+}
+
+.panel h2 { margin-top: 0; }
+
+.stamp-book {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.stamp {
+  min-width: 0;
+  text-align: center;
+  padding: 12px 3px;
+  border: 2px dashed #b6c0a7;
+  background: #eef0e4;
+  border-radius: 13px;
+  color: #75806c;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.stamp-icon {
+  display: block;
+  font-size: clamp(23px, 4vw, 38px);
+  margin-bottom: 6px;
+  filter: grayscale(1);
+  opacity: .35;
+}
+
+.stamp.earned {
+  background: #fff1bb;
+  border: 2px solid #d8ad46;
+  color: #72591e;
+}
+
+.stamp.earned .stamp-icon {
+  filter: none;
+  opacity: 1;
+  animation: pop .4s;
+}
+
+@keyframes pop {
+  50% { transform: scale(1.3) rotate(-10deg); }
 }
 
 .status {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
+  margin: 16px 0 8px;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .progress {
-  height: 22px;
-  background: #dedbca;
+  height: 17px;
   border-radius: 20px;
+  background: #e0e5d5;
   overflow: hidden;
-  border: 2px solid #b5ac8d;
 }
 
 #progressBar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #75b85c, #f5d46b);
-  transition: width 0.6s;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #55965c, #e7cb65);
+  transition: width .5s;
+}
+
+#rank {
+  font-size: 14px;
+  text-align: center;
+  color: #657c48;
 }
 
 .map {
   position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border: 5px solid #9b8053;
+  aspect-ratio: 900 / 650;
+  border: 5px solid #9a8057;
   border-radius: 18px;
-  background: #b8d698;
+  overflow: hidden;
+  background: #b7d9a0;
   isolation: isolate;
 }
 
-.map svg {
+.landscape {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  inset: 0;
 }
 
 .pin {
   position: absolute;
-  transform: translate(-50%, -50%);
   z-index: 5;
+  transform: translate(-50%, -50%);
   border: none;
   background: transparent;
   cursor: pointer;
-  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
+  padding: 0;
   font-family: inherit;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .pin-icon {
   display: grid;
   place-items: center;
-  width: clamp(32px, 6vw, 55px);
-  height: clamp(32px, 6vw, 55px);
-  font-size: clamp(20px, 4vw, 32px);
-  background: #fff9df;
-  border: 3px solid #a58245;
+  width: clamp(34px, 6vw, 58px);
+  height: clamp(34px, 6vw, 58px);
   border-radius: 50%;
-  box-shadow: 0 4px 0 #657d4c;
-  transition: transform 0.2s;
+  border: 3px solid #b7944e;
+  background: #fff9e5;
+  font-size: clamp(20px, 4vw, 32px);
+  box-shadow: 0 4px 5px #183f3655;
+  transition: transform .2s;
 }
 
 .pin:hover .pin-icon,
@@ -126,181 +194,142 @@ main {
 }
 
 .pin-name {
-  background: #fff9e9;
-  border: 1px solid #a58245;
-  border-radius: 6px;
-  padding: 3px 6px;
+  background: #fffdf0;
+  color: #31543c;
+  border: 1px solid #9eac83;
+  border-radius: 7px;
+  padding: 4px 7px;
+  font-size: clamp(9px, 1.6vw, 14px);
   font-weight: bold;
-  font-size: clamp(10px, 2vw, 15px);
-  white-space: nowrap;
-  color: #354b39;
+  max-width: 130px;
+  text-align: center;
 }
 
 .pin.visited .pin-icon {
-  background: #ffdf71;
-  border-color: #d29c32;
+  background: #ffe078;
 }
 
 .pin.selected .pin-name {
-  background: #355b3d;
   color: white;
+  background: #315c42;
 }
 
 #bear {
   position: absolute;
-  left: 68%;
-  top: 87%;
-  width: clamp(42px, 8vw, 85px);
+  left: 65%;
+  top: 91%;
+  width: clamp(40px, 8vw, 85px);
   transform: translate(-50%, -100%);
-  z-index: 8;
+  transition: left 1.2s ease, top 1.2s ease;
   pointer-events: none;
-  transition: left 1s ease-in-out, top 1s ease-in-out;
+  z-index: 9;
   filter: drop-shadow(0 4px 3px #0003);
 }
 
-#bear svg {
-  position: relative;
-  display: block;
+#bear svg { width: 100%; }
+
+.cloud {
+  animation: cloudMove 18s ease-in-out infinite alternate;
 }
 
-.map-note {
-  font-size: 11px;
-  color: #6a745f;
-  margin: 8px 0;
+@keyframes cloudMove {
+  to { transform: translateX(45px); }
+}
+
+.steam {
+  animation: steamMove 3s ease-in-out infinite;
+}
+
+@keyframes steamMove {
+  0% { opacity: .2; transform: translateY(8px); }
+  50% { opacity: .85; }
+  100% { opacity: .1; transform: translateY(-12px); }
+}
+
+.water-shine {
+  animation: shimmer 4s ease-in-out infinite alternate;
+}
+
+@keyframes shimmer {
+  to { opacity: .2; }
 }
 
 .guide {
   display: flex;
-  gap: 15px;
   align-items: center;
+  gap: 16px;
 }
 
-.guide-avatar {
-  width: 85px;
+.avatar {
+  width: 90px;
   flex-shrink: 0;
 }
 
-.guide-avatar svg {
-  width: 100%;
-}
+.avatar svg { width: 100%; }
 
 .speech {
-  background: #eef4e5;
+  background: #eaf2df;
   padding: 15px;
-  border-radius: 14px;
+  border-radius: 15px;
+  line-height: 1.8;
   flex: 1;
-  line-height: 1.8;
-}
-
-#spotTitle {
-  margin: 0 0 10px;
-  color: #326343;
-}
-
-#spotDescription {
-  line-height: 1.8;
 }
 
 .detail {
-  background: #f2f5e8;
-  padding: 14px;
-  border-radius: 12px;
   margin-top: 12px;
+  padding: 14px;
+  background: #f0f4e6;
+  border-left: 4px solid #7caa67;
+  border-radius: 8px;
   line-height: 1.8;
 }
 
-.detail h3 {
-  font-size: 16px;
-  margin: 0 0 5px;
-}
+.detail h3 { margin: 0 0 6px; }
 
 #reward {
-  color: #956714;
+  color: #9c731c;
   font-weight: bold;
-  margin-top: 12px;
 }
 
-.stamps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 10px;
-}
-
-.stamp {
-  border: 2px dashed #b8b8a3;
-  background: #f2f1e8;
-  border-radius: 12px;
-  padding: 12px 4px;
-  text-align: center;
-  color: #999;
+.note {
   font-size: 12px;
-}
-
-.stamp-icon {
-  font-size: 30px;
-  display: block;
-  margin-bottom: 6px;
-  filter: grayscale(1);
-  opacity: 0.4;
-}
-
-.stamp.earned {
-  background: #fff1ba;
-  border: 2px solid #d5a840;
-  color: #79591f;
-}
-
-.stamp.earned .stamp-icon {
-  filter: none;
-  opacity: 1;
-}
-
-.action {
-  border: 0;
-  background: #46764c;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
-  font-family: inherit;
-  box-shadow: 0 4px 0 #294b31;
-}
-
-.action:hover {
-  background: #5a905e;
+  color: #6d8069;
 }
 
 #clearPanel {
   text-align: center;
-  background: #fff3c5;
-  border-color: #d5a840;
+  border-color: var(--gold);
+  background: #fff4cc;
 }
 
-#clearPanel h2 {
-  color: #9b691a;
-}
+.trophy { font-size: 65px; }
 
-.trophy {
-  font-size: 65px;
+button.action {
+  background: #396b47;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 13px 24px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #234a31;
 }
 
 footer {
   text-align: center;
+  padding: 25px;
   font-size: 12px;
-  padding: 25px 15px;
-  line-height: 1.8;
+  line-height: 2;
 }
 
-footer a {
-  color: #356d48;
-}
+footer a { color: #315c42; }
 
 #confetti {
   position: fixed;
   inset: 0;
   pointer-events: none;
+  overflow: hidden;
   z-index: 100;
 }
 
@@ -308,18 +337,27 @@ footer a {
   position: absolute;
   top: -20px;
   width: 10px;
-  height: 16px;
-  animation: fall linear forwards;
+  height: 15px;
+  animation: fall 4s linear forwards;
 }
 
 @keyframes fall {
   to {
-    transform: translate(var(--drift), 110vh) rotate(900deg);
+    transform: translate(var(--drift), 110vh) rotate(850deg);
   }
 }
 
+@media (max-width: 600px) {
+  main { padding: 9px; }
+  .panel { padding: 12px; }
+  .stamp-book { grid-template-columns: repeat(4, 1fr); }
+  .avatar { width: 60px; }
+  .map { aspect-ratio: 1 / 1; }
+  .pin-name { max-width: 75px; padding: 3px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *, *::before, *::after {
     animation: none !important;
     transition: none !important;
   }
@@ -329,368 +367,425 @@ footer a {
 
 <body>
 
-<!-- クマのイラスト：外部画像なしで表示 -->
-<svg width="0" height="0"
-     style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="fur" x2="0.8" y2="1">
-      <stop stop-color="#756154"/>
-      <stop offset="1" stop-color="#382e2b"/>
-    </linearGradient>
+<!-- AI部のツキノワグマ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <radialGradient id="fur">
+    <stop stop-color="#75645a"/>
+    <stop offset="1" stop-color="#332e2b"/>
+  </radialGradient>
 
-    <symbol id="bearArt" viewBox="0 0 120 130">
-      <ellipse cx="60" cy="122" rx="39" ry="6"
-               fill="#000" opacity=".15"/>
+  <symbol id="bearArt" viewBox="0 0 120 140">
+    <ellipse cx="60" cy="132" rx="39" ry="6" fill="#000" opacity=".15"/>
 
-      <circle cx="28" cy="24" r="17" fill="url(#fur)"/>
-      <circle cx="92" cy="24" r="17" fill="url(#fur)"/>
-      <circle cx="28" cy="24" r="9" fill="#a78b78"/>
-      <circle cx="92" cy="24" r="9" fill="#a78b78"/>
+    <circle cx="27" cy="25" r="17" fill="url(#fur)"/>
+    <circle cx="93" cy="25" r="17" fill="url(#fur)"/>
+    <circle cx="27" cy="25" r="9" fill="#a68b7c"/>
+    <circle cx="93" cy="25" r="9" fill="#a68b7c"/>
 
-      <ellipse cx="60" cy="92" rx="35" ry="31"
-               fill="url(#fur)"/>
+    <ellipse cx="60" cy="98" rx="35" ry="34" fill="url(#fur)"/>
 
-      <ellipse cx="31" cy="112" rx="18" ry="12"
-               fill="#493b35"/>
-      <ellipse cx="89" cy="112" rx="18" ry="12"
-               fill="#493b35"/>
+    <path d="M39 82 Q60 103 81 82 Q72 112 60 110 Q48 112 39 82"
+          fill="#fff1c9"/>
 
-      <path d="M39 77 Q60 98 81 77
-               Q74 105 60 105 Q46 105 39 77"
-            fill="#fff0c8"/>
+    <ellipse cx="32" cy="120" rx="19" ry="13" fill="#443934"/>
+    <ellipse cx="88" cy="120" rx="19" ry="13" fill="#443934"/>
 
-      <ellipse cx="60" cy="48" rx="45" ry="37"
-               fill="url(#fur)"/>
+    <ellipse cx="60" cy="49" rx="45" ry="38" fill="url(#fur)"/>
+    <ellipse cx="60" cy="61" rx="23" ry="17" fill="#e7c7a7"/>
 
-      <ellipse cx="60" cy="59" rx="22" ry="17"
-               fill="#e9c6a1"/>
+    <path d="M32 45 Q39 36 46 45 M74 45 Q81 36 88 45"
+          stroke="#211d1b" stroke-width="3" fill="none"
+          stroke-linecap="round"/>
 
-      <path d="M33 44 Q40 36 47 44
-               M73 44 Q80 36 87 44"
-            stroke="#241d19" stroke-width="3"
-            fill="none" stroke-linecap="round"/>
+    <ellipse cx="60" cy="53" rx="8" ry="5" fill="#241f1d"/>
 
-      <ellipse cx="60" cy="51" rx="8" ry="5"
-               fill="#302521"/>
+    <path d="M60 57 Q58 69 50 63 M60 57 Q62 69 70 63"
+          stroke="#49372e" stroke-width="2" fill="none"/>
 
-      <path d="M60 55 Q59 67 50 61
-               M60 55 Q61 67 70 61"
-            stroke="#493128" stroke-width="2"
-            fill="none"/>
+    <ellipse cx="28" cy="58" rx="8" ry="4" fill="#e5a19b"/>
+    <ellipse cx="92" cy="58" rx="8" ry="4" fill="#e5a19b"/>
 
-      <ellipse cx="29" cy="57" rx="8" ry="4"
-               fill="#df9289" opacity=".8"/>
-      <ellipse cx="91" cy="57" rx="8" ry="4"
-               fill="#df9289" opacity=".8"/>
+    <path d="M15 44 Q10 0 60 4 Q110 0 105 44"
+          fill="none" stroke="#8ad1e7" stroke-width="7"/>
 
-      <!-- AI部らしい青いヘッドホン -->
-      <path d="M17 44 Q10 0 60 3 Q110 0 103 44"
-            fill="none" stroke="#74b8d6" stroke-width="6"/>
+    <rect x="8" y="36" width="15" height="28" rx="7" fill="#78c6e5"/>
+    <rect x="97" y="36" width="15" height="28" rx="7" fill="#78c6e5"/>
 
-      <rect x="10" y="36" width="13" height="25"
-            rx="6" fill="#78c8e6"/>
-      <rect x="97" y="36" width="13" height="25"
-            rx="6" fill="#78c8e6"/>
-    </symbol>
-  </defs>
+    <path d="M35 91 Q60 105 85 91"
+          stroke="#8ed3e4" stroke-width="7" fill="none"/>
+  </symbol>
+</defs>
 </svg>
 
 <header>
-  <div style="font-size:14px;letter-spacing:4px">
-    HOKKAIDO ADVENTURE
+  <div class="language">
+    <span>🌐</span>
+    <select id="language" aria-label="Language">
+      <option value="ja">日本語</option>
+      <option value="en">English</option>
+      <option value="zh">简体中文</option>
+      <option value="tw">繁體中文</option>
+      <option value="ko">한국어</option>
+      <option value="fr">Français</option>
+    </select>
   </div>
-  <h1>🌿 てしかが冒険クエスト</h1>
-  <p>AI部のクマと北海道を旅しよう！</p>
+
+  <div style="letter-spacing:4px;font-size:12px">
+    HOKKAIDO NATURE ADVENTURE
+  </div>
+
+  <h1 data-t="title"></h1>
+  <p data-t="subtitle"></p>
 </header>
 
 <main>
 
-  <section class="panel">
-    <div class="guide">
-      <div class="guide-avatar">
-        <svg viewBox="0 0 120 130">
-          <use href="#bearArt"/>
-        </svg>
-      </div>
-      <div class="speech">
-        鹿児島・九州のみんな、こんにちは！<br>
-        北海道の弟子屈町へようこそ。<br>
-        ぼくと一緒に7つの観光スポットを探そう！
-      </div>
-    </div>
-  </section>
+<!-- スタンプカードを一番上に表示 -->
+<section class="panel">
+  <h2 data-t="stampTitle"></h2>
+  <div class="stamp-book" id="stampBook"></div>
 
-  <section class="panel">
-    <div class="status">
-      <span>⚔️ 冒険達成度</span>
-      <span id="progressText">0 / 7</span>
-    </div>
-
-    <div class="progress"
-         role="progressbar"
-         aria-label="冒険達成度"
-         aria-valuemin="0"
-         aria-valuemax="7"
-         aria-valuenow="0">
-      <div id="progressBar"></div>
-    </div>
-
-    <p id="level">称号：旅のはじまり</p>
-
-    <div class="map" id="map">
-
-      <!-- RPG風のイラスト地図 -->
-      <svg viewBox="0 0 800 600"
-           preserveAspectRatio="none"
-           aria-hidden="true">
-
-        <defs>
-          <linearGradient id="grass" x2="0" y2="1">
-            <stop stop-color="#c9e2a5"/>
-            <stop offset="1" stop-color="#8eb77c"/>
-          </linearGradient>
-
-          <linearGradient id="water" x2="0" y2="1">
-            <stop stop-color="#8ad8e7"/>
-            <stop offset="1" stop-color="#398eaf"/>
-          </linearGradient>
-
-          <g id="tree">
-            <ellipse cx="0" cy="13" rx="15" ry="6"
-                     fill="#527c48" opacity=".3"/>
-            <rect x="-3" y="0" width="6" height="15"
-                  fill="#96734d"/>
-            <path d="M0 -28 L-17 7 L17 7 Z"
-                  fill="#417d50"/>
-            <path d="M0 -28 L0 7 L17 7 Z"
-                  fill="#32643e"/>
-          </g>
-
-          <g id="mountain">
-            <path d="M-42 25 L0 -48 L42 25 Z"
-                  fill="#82958b"/>
-            <path d="M0 -48 L42 25 L0 25 Z"
-                  fill="#60786c"/>
-            <path d="M0 -48 L-15 -22 L-4 -27
-                     L7 -18 L15 -22 Z"
-                  fill="#fffdf1"/>
-          </g>
-
-          <g id="house">
-            <rect x="-18" y="-4" width="36" height="28"
-                  rx="2" fill="#f3d9a5"/>
-            <path d="M-23 -4 L0 -25 L23 -4 Z"
-                  fill="#a45c43"/>
-            <rect x="-5" y="8" width="10" height="16"
-                  fill="#856449"/>
-            <rect x="-14" y="1" width="7" height="8"
-                  fill="#9bd9e8"/>
-          </g>
-
-        </defs>
-
-        <rect width="800" height="600" fill="url(#grass)"/>
-
-        <!-- 丘陵 -->
-        <path d="M0 0 H800 V85
-                 Q650 20 550 90
-                 T300 65 T0 100 Z"
-              fill="#91b780"/>
-
-        <path d="M0 460 Q130 370 270 490
-                 T570 490 T800 450 V600 H0 Z"
-              fill="#a6c88c"/>
-
-        <!-- 屈斜路湖 -->
-        <path d="M100 165
-                 Q130 110 220 125
-                 Q300 130 335 190
-                 Q370 245 323 310
-                 Q290 380 205 360
-                 Q110 365 78 290
-                 Q55 220 100 165 Z"
-              fill="url(#water)"
-              stroke="#dbe8bc" stroke-width="10"/>
-
-        <!-- 湖の中島 -->
-        <path d="M175 220 Q210 192 235 225
-                 Q258 262 220 280
-                 Q185 288 165 258 Z"
-              fill="#80ad68"/>
-
-        <path d="M100 275 Q130 280 151 270
-                 M253 180 Q280 187 300 180
-                 M235 325 Q260 333 282 324"
-              fill="none" stroke="#d1f1f5"
-              stroke-width="3" stroke-linecap="round"/>
-
-        <!-- 摩周湖 -->
-        <path d="M610 190
-                 Q655 155 700 190
-                 Q755 230 720 290
-                 Q695 330 650 310
-                 Q590 295 585 250
-                 Q580 210 610 190 Z"
-              fill="url(#water)"
-              stroke="#799d70" stroke-width="13"/>
-
-        <ellipse cx="665" cy="252" rx="9" ry="6"
-                 fill="#729b60"/>
-
-        <!-- 冒険ルート -->
-        <g fill="none" stroke-linecap="round"
-           stroke-linejoin="round">
-
-          <path d="M65 140 Q150 65 250 90
-                   T460 115 L480 220
-                   Q520 280 650 310
-                   M460 115 Q360 120 330 185
-                   M330 185 Q380 320 470 410
-                   L540 500
-                   M650 310 Q590 390 540 500
-                   M205 380 Q350 440 470 410"
-                stroke="#b9a476" stroke-width="18"/>
-
-          <path d="M65 140 Q150 65 250 90
-                   T460 115 L480 220
-                   Q520 280 650 310
-                   M460 115 Q360 120 330 185
-                   M330 185 Q380 320 470 410
-                   L540 500
-                   M650 310 Q590 390 540 500
-                   M205 380 Q350 440 470 410"
-                stroke="#f8e8b9" stroke-width="12"/>
-
-          <path d="M65 140 Q150 65 250 90
-                   T460 115 L480 220
-                   Q520 280 650 310
-                   M460 115 Q360 120 330 185
-                   M330 185 Q380 320 470 410
-                   L540 500
-                   M650 310 Q590 390 540 500
-                   M205 380 Q350 440 470 410"
-                stroke="#b79c66" stroke-width="2"
-                stroke-dasharray="8 12"/>
-        </g>
-
-        <!-- 山 -->
-        <use href="#mountain" x="70" y="65"/>
-        <use href="#mountain" x="125" y="45"/>
-        <use href="#mountain" x="660" y="75"/>
-        <use href="#mountain" x="720" y="95"/>
-        <use href="#mountain" x="485" y="205"/>
-
-        <!-- 硫黄山の噴気 -->
-        <g fill="#fff" opacity=".8">
-          <circle cx="480" cy="158" r="11"/>
-          <circle cx="491" cy="142" r="14"/>
-          <circle cx="505" cy="123" r="17"/>
-        </g>
-
-        <!-- 温泉街 -->
-        <use href="#house" x="420" y="95"/>
-        <use href="#house" x="495" y="95"/>
-        <use href="#house" x="490" y="510"/>
-        <use href="#house" x="590" y="515"/>
-
-        <!-- 森 -->
-        <g id="forest"></g>
-
-        <!-- 方位 -->
-        <g transform="translate(755 55)">
-          <circle r="26" fill="#fff9df"
-                  stroke="#8b805c" stroke-width="2"/>
-          <path d="M0 -18 L8 8 L0 3 L-8 8 Z"
-                fill="#8b5540"/>
-          <text y="-29" text-anchor="middle"
-                font-size="14" font-weight="bold">N</text>
-        </g>
-
-        <text x="28" y="565" font-size="18"
-              fill="#456d42" font-weight="bold">
-          弟子屈の冒険ワールド
-        </text>
-
-      </svg>
-
-      <!-- JavaScriptで観光ピンを追加 -->
-
-      <div id="bear" aria-hidden="true">
-        <svg viewBox="0 0 120 130">
-          <use href="#bearArt"/>
-        </svg>
-      </div>
-
-    </div>
-
-    <p class="map-note">
-      ※ゲーム用のイラスト地図です。
-      実際の道路・距離・縮尺とは異なります。
-    </p>
-  </section>
-
-  <section class="panel" id="info" aria-live="polite">
-
-    <h2 id="spotTitle">🧭 冒険をはじめよう！</h2>
-
-    <p id="spotDescription">
-      地図にある7つのピンを押して、
-      弟子屈町の魅力を発見しよう！
-    </p>
-
-    <div id="spotDetails" hidden>
-      <div class="detail">
-        <h3>🎒 おすすめの楽しみ方</h3>
-        <div id="spotActivity"></div>
-      </div>
-
-      <div class="detail">
-        <h3>💡 九州のみんなへ豆知識</h3>
-        <div id="spotTrivia"></div>
-      </div>
-
-      <p id="reward"></p>
-    </div>
-
-  </section>
-
-  <section class="panel">
-    <h2>📖 冒険スタンプ帳</h2>
-    <p>7つのスタンプを集めてコンプリートしよう！</p>
-    <div class="stamps" id="stampBook"></div>
-  </section>
-
-  <section class="panel" id="clearPanel" hidden>
-    <div class="trophy">🏆</div>
-    <h2>全クエストクリア！</h2>
-    <h3>称号：弟子屈観光マスター</h3>
-    <p>
-      おめでとう！<br>
-      弟子屈町の魅力をすべて発見したね！<br>
-      今度は本物の北海道にも遊びに来てね。
-    </p>
-  </section>
-
-  <div style="text-align:center;margin:25px 0">
-    <button class="action" id="resetButton">
-      🔄 最初から冒険する
-    </button>
+  <div class="status">
+    <span data-t="progress"></span>
+    <span id="progressText">0 / 7</span>
   </div>
+
+  <div class="progress"
+       role="progressbar"
+       aria-label="Adventure progress"
+       aria-valuemin="0"
+       aria-valuemax="7"
+       aria-valuenow="0">
+    <div id="progressBar"></div>
+  </div>
+
+  <p id="rank"></p>
+</section>
+
+<section class="panel">
+  <div class="guide">
+    <div class="avatar">
+      <svg viewBox="0 0 120 140">
+        <use href="#bearArt"/>
+      </svg>
+    </div>
+    <div class="speech" data-t="welcome"></div>
+  </div>
+</section>
+
+<!-- 自然豊かな冒険マップ -->
+<section class="panel">
+  <h2 data-t="mapTitle"></h2>
+
+  <div class="map" id="map">
+
+    <svg class="landscape" viewBox="0 0 900 650"
+         preserveAspectRatio="none" aria-hidden="true">
+
+      <defs>
+        <linearGradient id="land" x2=".3" y2="1">
+          <stop stop-color="#d4e8a6"/>
+          <stop offset=".5" stop-color="#9ac77d"/>
+          <stop offset="1" stop-color="#6c9e68"/>
+        </linearGradient>
+
+        <linearGradient id="lake" x2=".3" y2="1">
+          <stop stop-color="#a9e6df"/>
+          <stop offset=".45" stop-color="#5bbbc7"/>
+          <stop offset="1" stop-color="#287da4"/>
+        </linearGradient>
+
+        <linearGradient id="deepLake" x2="0" y2="1">
+          <stop stop-color="#70c8e0"/>
+          <stop offset="1" stop-color="#245b9a"/>
+        </linearGradient>
+
+        <linearGradient id="hill" x2="0" y2="1">
+          <stop stop-color="#b6d28b"/>
+          <stop offset="1" stop-color="#64975f"/>
+        </linearGradient>
+
+        <g id="pine">
+          <ellipse cy="14" rx="17" ry="7" fill="#315e40" opacity=".2"/>
+          <rect x="-3" y="0" width="6" height="17" fill="#866345"/>
+          <path d="M0 -40 L-19 9 L19 9Z" fill="#386b49"/>
+          <path d="M0 -40 L0 9 L19 9Z" fill="#28583c"/>
+          <path d="M0 -40 L-13 -7 L0 -12Z" fill="#6e9f5c"/>
+        </g>
+
+        <g id="birch">
+          <ellipse cy="13" rx="13" ry="5" fill="#315e40" opacity=".2"/>
+          <rect x="-3" y="-15" width="6" height="31" rx="2" fill="#f3ead3"/>
+          <path d="M-3 2H3 M-3 9H1" stroke="#6d6a59" stroke-width="2"/>
+          <ellipse cy="-22" rx="16" ry="23" fill="#80ad59"/>
+          <ellipse cx="-6" cy="-27" rx="10" ry="15" fill="#a9cd74"/>
+        </g>
+
+        <g id="mountain">
+          <path d="M-70 40 L0 -85 L70 40Z" fill="#83998b"/>
+          <path d="M0 -85 L70 40 L0 40Z" fill="#587c6d"/>
+          <path d="M0 -85 L-25 -40 L-10 -47 L7 -33 L25 -40Z"
+                fill="#fffdf2"/>
+          <path d="M-70 40 L-35 0 L-15 40Z" fill="#6c9c62"/>
+        </g>
+
+        <g id="house">
+          <rect x="-19" y="-5" width="38" height="29"
+                rx="3" fill="#f3dfb4"/>
+          <path d="M-25 -5 L0 -27 L25 -5Z" fill="#986345"/>
+          <rect x="-5" y="8" width="10" height="16" fill="#78533d"/>
+          <rect x="-14" y="1" width="8" height="8" fill="#b6e1e2"/>
+          <rect x="7" y="1" width="8" height="8" fill="#b6e1e2"/>
+        </g>
+
+        <g id="flower">
+          <path d="M0 0V9" stroke="#477b44" stroke-width="2"/>
+          <circle cx="-3" cy="-2" r="3" fill="currentColor"/>
+          <circle cx="3" cy="-2" r="3" fill="currentColor"/>
+          <circle cy="-5" r="3" fill="currentColor"/>
+          <circle r="2" fill="#f5cf65"/>
+        </g>
+
+        <g id="cloudShape" fill="#fff" opacity=".7">
+          <ellipse cx="0" cy="0" rx="42" ry="14"/>
+          <circle cx="-17" cy="-9" r="17"/>
+          <circle cx="6" cy="-15" r="22"/>
+          <circle cx="27" cy="-5" r="14"/>
+        </g>
+      </defs>
+
+      <!-- 草原 -->
+      <rect width="900" height="650" fill="url(#land)"/>
+
+      <!-- 丘陵 -->
+      <path d="M0 100 Q100 -15 250 80 T550 60 T900 70 V0 H0Z"
+            fill="#83ac79"/>
+
+      <path d="M0 460 Q140 380 270 480 T570 500 T900 430 V650 H0Z"
+            fill="url(#hill)"/>
+
+      <path d="M0 590 Q160 510 320 570 T650 580 T900 550 V650 H0Z"
+            fill="#9bc47b"/>
+
+      <!-- 山々 -->
+      <use href="#mountain" x="75" y="75"/>
+      <use href="#mountain" x="155" y="60"/>
+      <use href="#mountain" x="235" y="45"/>
+      <use href="#mountain" x="700" y="75"/>
+      <use href="#mountain" x="795" y="65"/>
+      <use href="#mountain" x="875" y="100"/>
+
+      <!-- 屈斜路湖 -->
+      <path d="M125 175 Q165 105 250 125
+               Q340 125 365 205
+               Q405 285 340 350
+               Q285 410 195 380
+               Q95 370 80 290
+               Q65 225 125 175Z"
+            fill="#dce6b1" stroke="#789e69" stroke-width="12"/>
+
+      <path d="M125 175 Q165 105 250 125
+               Q340 125 365 205
+               Q405 285 340 350
+               Q285 410 195 380
+               Q95 370 80 290
+               Q65 225 125 175Z"
+            fill="url(#lake)" stroke="#c6e4b2" stroke-width="5"/>
+
+      <!-- 中島 -->
+      <path d="M190 240 Q225 195 260 235
+               Q288 280 245 300
+               Q195 315 180 270Z"
+            fill="#7ca760" stroke="#d3e3a6" stroke-width="4"/>
+
+      <use href="#pine" x="215" y="255"/>
+      <use href="#pine" x="240" y="265"/>
+      <use href="#birch" x="225" y="286"/>
+
+      <!-- 摩周湖の外輪山 -->
+      <path d="M640 175 Q710 120 785 180
+               Q855 245 805 325
+               Q750 390 665 340
+               Q595 300 605 230Z"
+            fill="#527f60" stroke="#73966c" stroke-width="20"/>
+
+      <path d="M650 190 Q710 145 770 195
+               Q825 250 785 310
+               Q745 355 680 320
+               Q625 290 630 240Z"
+            fill="url(#deepLake)" stroke="#a0c294" stroke-width="7"/>
+
+      <ellipse cx="725" cy="267" rx="10" ry="7" fill="#719b64"/>
+
+      <!-- 湖のきらめき -->
+      <g class="water-shine" fill="none"
+         stroke="#e7ffff" stroke-width="3" stroke-linecap="round">
+        <path d="M115 220Q140 225 160 220"/>
+        <path d="M110 320Q140 325 165 320"/>
+        <path d="M280 170Q305 175 325 170"/>
+        <path d="M280 330Q305 335 330 330"/>
+        <path d="M665 225Q690 230 715 225"/>
+        <path d="M735 290Q755 295 775 290"/>
+      </g>
+
+      <!-- 釧路川をイメージした川 -->
+      <path d="M280 380 Q340 420 310 460
+               T400 520 T440 650"
+            fill="none" stroke="#d0e7b9" stroke-width="20"/>
+
+      <path d="M280 380 Q340 420 310 460
+               T400 520 T440 650"
+            fill="none" stroke="#78c6d3" stroke-width="12"/>
+
+      <!-- 冒険ルート -->
+      <g fill="none" stroke-linecap="round">
+        <path d="M72 170 Q180 70 350 160
+                 Q430 80 490 120
+                 L525 225 Q590 300 720 340
+                 M350 160 Q400 310 470 410
+                 L585 535
+                 M720 340 Q650 420 585 535
+                 M225 390 Q340 430 470 410"
+              stroke="#a08b60" stroke-width="15"/>
+
+        <path d="M72 170 Q180 70 350 160
+                 Q430 80 490 120
+                 L525 225 Q590 300 720 340
+                 M350 160 Q400 310 470 410
+                 L585 535
+                 M720 340 Q650 420 585 535
+                 M225 390 Q340 430 470 410"
+              stroke="#f3e3b4" stroke-width="10"/>
+
+        <path d="M72 170 Q180 70 350 160
+                 Q430 80 490 120
+                 L525 225 Q590 300 720 340
+                 M350 160 Q400 310 470 410
+                 L585 535
+                 M720 340 Q650 420 585 535
+                 M225 390 Q340 430 470 410"
+              stroke="#c1a573" stroke-width="2"
+              stroke-dasharray="6 10"/>
+      </g>
+
+      <!-- 温泉街 -->
+      <use href="#house" x="450" y="110"/>
+      <use href="#house" x="505" y="100"/>
+      <use href="#house" x="550" y="130"/>
+
+      <use href="#house" x="535" y="540"/>
+      <use href="#house" x="585" y="555"/>
+      <use href="#house" x="640" y="535"/>
+
+      <!-- 硫黄山 -->
+      <path d="M465 250 L525 165 L590 250Z" fill="#b5ad82"/>
+      <path d="M525 165 L590 250 L525 250Z" fill="#8f9277"/>
+
+      <g fill="#e8d35a">
+        <ellipse cx="506" cy="220" rx="15" ry="6"/>
+        <ellipse cx="548" cy="235" rx="18" ry="7"/>
+      </g>
+
+      <!-- 湯けむり -->
+      <g class="steam" fill="white" opacity=".8">
+        <circle cx="525" cy="180" r="12"/>
+        <circle cx="535" cy="161" r="16"/>
+        <circle cx="549" cy="140" r="19"/>
+        <circle cx="475" cy="76" r="12"/>
+        <circle cx="585" cy="500" r="14"/>
+        <circle cx="350" cy="125" r="10"/>
+      </g>
+
+      <!-- JavaScriptで森と花畑を描画 -->
+      <g id="forest"></g>
+      <g id="flowers"></g>
+
+      <!-- 白鳥 -->
+      <g fill="#fffdf5" stroke="#f3f2e4" stroke-width="3">
+        <ellipse cx="140" cy="280" rx="13" ry="6"/>
+        <path d="M148 280Q158 255 149 258" fill="none"/>
+        <ellipse cx="180" cy="335" rx="11" ry="5"/>
+        <path d="M187 335Q197 313 189 315" fill="none"/>
+      </g>
+
+      <!-- 流れる雲 -->
+      <g class="cloud">
+        <use href="#cloudShape" x="320" y="35"/>
+        <use href="#cloudShape" x="620" y="45"/>
+      </g>
+
+      <!-- 方位磁針 -->
+      <g transform="translate(850 65)">
+        <circle r="28" fill="#fff8df" stroke="#99835b" stroke-width="2"/>
+        <path d="M0 -22L9 10L0 4L-9 10Z" fill="#965e42"/>
+        <text y="-34" text-anchor="middle"
+              font-size="15" font-weight="bold" fill="#315c42">N</text>
+      </g>
+    </svg>
+
+    <div id="bear" aria-hidden="true">
+      <svg viewBox="0 0 120 140">
+        <use href="#bearArt"/>
+      </svg>
+    </div>
+
+  </div>
+
+  <p class="note" data-t="mapNote"></p>
+</section>
+
+<!-- 観光案内 -->
+<section class="panel" id="info" aria-live="polite">
+  <h2 id="spotTitle"></h2>
+
+  <div class="guide">
+    <div class="avatar">
+      <svg viewBox="0 0 120 140">
+        <use href="#bearArt"/>
+      </svg>
+    </div>
+    <div class="speech" id="spotDescription"></div>
+  </div>
+
+  <div id="spotDetails" hidden>
+    <div class="detail">
+      <h3 data-t="activity"></h3>
+      <div id="spotActivity"></div>
+    </div>
+
+    <div class="detail">
+      <h3 data-t="trivia"></h3>
+      <div id="spotTrivia"></div>
+    </div>
+
+    <p id="reward"></p>
+  </div>
+</section>
+
+<!-- クリア画面 -->
+<section class="panel" id="clearPanel" hidden>
+  <div class="trophy">🏆</div>
+  <h2 data-t="clearTitle"></h2>
+  <p data-t="clearMessage"></p>
+</section>
+
+<div style="text-align:center;padding:15px">
+  <button class="action" id="reset" data-t="reset"></button>
+</div>
 
 </main>
 
 <footer>
-  北海道弟子屈町・AI部 観光MAP<br>
-  イラスト地図・キャラクター：オリジナルSVG<br>
-  観光情報の確認先：
-  <a href="https://www.masyuko.or.jp/"
-     target="_blank" rel="noopener noreferrer">
-    摩周湖観光協会
+  <span data-t="footer"></span><br>
+  <span data-t="sources"></span><br>
+  <a href="https://www.masyuko.or.jp/" target="_blank" rel="noopener">
+    Mashu Tourism
   </a>
   ／
   <a href="https://www.town.teshikaga.hokkaido.jp/"
-     target="_blank" rel="noopener noreferrer">
-    弟子屈町公式サイト
+     target="_blank" rel="noopener">
+    Teshikaga Town
   </a>
 </footer>
 
@@ -698,349 +793,679 @@ footer a {
 
 <script>
 
-// ==============================
-// 観光スポットのデータ
-// ==============================
+// =================================
+// 6言語の翻訳データ
+// =================================
+
+const translations = {
+
+  ja: {
+    title: "🌿 てしかが冒険クエスト",
+    subtitle: "AI部のクマと北海道の大自然を旅しよう！",
+    stampTitle: "📖 冒険スタンプカード",
+    progress: "冒険達成度",
+    welcome: "鹿児島・九州、そして世界のみんな、こんにちは！ ぼくと一緒に弟子屈町の自然と温泉を探検しよう！",
+    mapTitle: "🗺️ 大自然の冒険マップ",
+    mapNote: "※冒険用のイラスト地図です。実際の道路・距離・縮尺とは異なります。",
+    startTitle: "🧭 冒険をはじめよう！",
+    startMessage: "気になる場所のピンを押してね。7つの観光スポットを発見しよう！",
+    activity: "🎒 おすすめの楽しみ方",
+    trivia: "💡 旅の豆知識",
+    reward: "✨ 新しいスタンプをゲット！",
+    again: "⭐ この場所は発見済みだよ！",
+    clearTitle: "全クエストクリア！",
+    clearMessage: "おめでとう！ 君は弟子屈観光マスターだよ。いつか本物の北海道にも遊びに来てね！",
+    reset: "🔄 最初から冒険する",
+    footer: "北海道弟子屈町・AI部 観光MAP",
+    sources: "観光情報の確認先",
+    ranks: ["旅のはじまり","北海道の冒険者","弟子屈探検隊","自然と温泉の達人","弟子屈観光マスター"]
+  },
+
+  en: {
+    title: "🌿 Teshikaga Adventure Quest",
+    subtitle: "Explore Hokkaido with the AI Club Bear!",
+    stampTitle: "📖 Adventure Stamp Card",
+    progress: "Adventure Progress",
+    welcome: "Hello, friends from Kagoshima, Kyushu and around the world! Let's explore the nature and hot springs of Teshikaga together!",
+    mapTitle: "🗺️ Nature Adventure Map",
+    mapNote: "Illustrated game map. Roads, distances and scale are simplified.",
+    startTitle: "🧭 Begin Your Adventure!",
+    startMessage: "Tap a pin and discover all seven destinations!",
+    activity: "🎒 Things to Do",
+    trivia: "💡 Travel Facts",
+    reward: "✨ New stamp collected!",
+    again: "⭐ You have already discovered this place!",
+    clearTitle: "Quest Complete!",
+    clearMessage: "Congratulations! You are a Teshikaga Tourism Master. Come and visit Hokkaido someday!",
+    reset: "🔄 Restart Adventure",
+    footer: "Teshikaga, Hokkaido — AI Club Tourism Map",
+    sources: "Tourism information resources",
+    ranks: ["New Traveler","Hokkaido Adventurer","Teshikaga Explorer","Nature and Onsen Expert","Teshikaga Tourism Master"]
+  },
+
+  zh: {
+    title: "🌿 弟子屈冒险之旅",
+    subtitle: "和AI社团的小熊一起探索北海道！",
+    stampTitle: "📖 冒险集章卡",
+    progress: "冒险进度",
+    welcome: "来自鹿儿岛、九州和世界各地的朋友们，你们好！一起探索弟子屈的自然风光和温泉吧！",
+    mapTitle: "🗺️ 自然冒险地图",
+    mapNote: "本地图为游戏插画，道路、距离和比例经过简化。",
+    startTitle: "🧭 开始冒险吧！",
+    startMessage: "点击地图标记，发现全部七个景点！",
+    activity: "🎒 推荐体验",
+    trivia: "💡 旅行小知识",
+    reward: "✨ 获得新的印章！",
+    again: "⭐ 已经发现这个景点啦！",
+    clearTitle: "全部任务完成！",
+    clearMessage: "恭喜你成为弟子屈旅游达人！欢迎有一天来到北海道！",
+    reset: "🔄 重新开始",
+    footer: "北海道弟子屈町・AI社团旅游地图",
+    sources: "旅游信息参考",
+    ranks: ["旅行新手","北海道冒险家","弟子屈探险家","自然与温泉达人","弟子屈旅游大师"]
+  },
+
+  tw: {
+    title: "🌿 弟子屈冒險之旅",
+    subtitle: "和AI社團的小熊一起探索北海道！",
+    stampTitle: "📖 冒險集章卡",
+    progress: "冒險進度",
+    welcome: "來自鹿兒島、九州和世界各地的朋友們，你們好！一起探索弟子屈的自然風光和溫泉吧！",
+    mapTitle: "🗺️ 自然冒險地圖",
+    mapNote: "本地圖為遊戲插畫，道路、距離和比例經過簡化。",
+    startTitle: "🧭 開始冒險吧！",
+    startMessage: "點擊地圖標記，發現全部七個景點！",
+    activity: "🎒 推薦體驗",
+    trivia: "💡 旅行小知識",
+    reward: "✨ 獲得新的印章！",
+    again: "⭐ 已經發現這個景點啦！",
+    clearTitle: "全部任務完成！",
+    clearMessage: "恭喜你成為弟子屈旅遊達人！歡迎有一天來到北海道！",
+    reset: "🔄 重新開始",
+    footer: "北海道弟子屈町・AI社團旅遊地圖",
+    sources: "旅遊資訊參考",
+    ranks: ["旅行新手","北海道冒險家","弟子屈探險家","自然與溫泉達人","弟子屈旅遊大師"]
+  },
+
+  ko: {
+    title: "🌿 데시카가 모험 퀘스트",
+    subtitle: "AI 동아리 곰과 함께 홋카이도를 여행해요!",
+    stampTitle: "📖 모험 스탬프 카드",
+    progress: "모험 진행도",
+    welcome: "가고시마, 규슈 그리고 세계의 친구들, 안녕하세요! 데시카가의 자연과 온천을 함께 탐험해요!",
+    mapTitle: "🗺️ 자연 모험 지도",
+    mapNote: "게임용 그림 지도입니다. 실제 도로, 거리 및 축척과 다릅니다.",
+    startTitle: "🧭 모험을 시작해요!",
+    startMessage: "지도 표시를 눌러 일곱 곳의 관광지를 발견하세요!",
+    activity: "🎒 추천 체험",
+    trivia: "💡 여행 상식",
+    reward: "✨ 새로운 스탬프 획득!",
+    again: "⭐ 이미 발견한 장소예요!",
+    clearTitle: "모든 퀘스트 완료!",
+    clearMessage: "축하해요! 데시카가 관광 마스터가 되었어요. 언젠가 홋카이도에 놀러 오세요!",
+    reset: "🔄 다시 시작",
+    footer: "홋카이도 데시카가 AI 동아리 관광 지도",
+    sources: "관광 정보 참고 사이트",
+    ranks: ["초보 여행자","홋카이도 모험가","데시카가 탐험가","자연과 온천 전문가","데시카가 관광 마스터"]
+  },
+
+  fr: {
+    title: "🌿 Aventure à Teshikaga",
+    subtitle: "Explorez Hokkaido avec l'ours du club IA !",
+    stampTitle: "📖 Carnet de tampons",
+    progress: "Progression",
+    welcome: "Bonjour aux amis de Kagoshima, de Kyushu et du monde entier ! Explorons ensemble la nature et les sources chaudes de Teshikaga !",
+    mapTitle: "🗺️ Carte d'aventure nature",
+    mapNote: "Carte illustrée pour le jeu. Routes, distances et échelle simplifiées.",
+    startTitle: "🧭 Que l'aventure commence !",
+    startMessage: "Touchez les repères pour découvrir les sept destinations !",
+    activity: "🎒 Activités conseillées",
+    trivia: "💡 Le saviez-vous ?",
+    reward: "✨ Nouveau tampon obtenu !",
+    again: "⭐ Ce lieu a déjà été découvert !",
+    clearTitle: "Quête terminée !",
+    clearMessage: "Félicitations ! Vous êtes maître du tourisme à Teshikaga. Venez découvrir Hokkaido un jour !",
+    reset: "🔄 Recommencer",
+    footer: "Carte touristique de Teshikaga, Hokkaido — Club IA",
+    sources: "Sources d'information touristique",
+    ranks: ["Voyageur débutant","Aventurier de Hokkaido","Explorateur de Teshikaga","Expert nature et onsen","Maître du tourisme à Teshikaga"]
+  }
+};
+
+// =================================
+// 観光スポット
+// name, description, activity, trivia
+// =================================
 
 const spots = [
   {
-    name: "摩周湖",
-    icon: "💎",
-    x: 82,
-    y: 46,
-    description:
-      "神秘的な青色が美しいカルデラ湖だよ。摩周ブルーと呼ばれる湖の色が魅力なんだ。",
-    activity:
-      "展望台から湖を眺めてみよう。晴れた日には美しい青色の湖と山々の景色を楽しめるよ。",
-    trivia:
-      "鹿児島の池田湖もカルデラ湖。北海道と九州には、火山が作った美しい湖があるんだね。"
+    icon: "💎", x: 80, y: 48,
+    ja: [
+      "摩周湖",
+      "神秘的な青色が美しいカルデラ湖だよ。",
+      "展望台から摩周ブルーと雄大な山々を眺めよう。",
+      "鹿児島の池田湖も火山活動によってできたカルデラ湖なんだ。"
+    ],
+    en: [
+      "Lake Mashu",
+      "A caldera lake famous for its mysterious deep blue water.",
+      "Enjoy the beautiful lake and mountains from an observation deck.",
+      "Lake Ikeda in Kagoshima is also a volcanic caldera lake."
+    ],
+    zh: [
+      "摩周湖","以神秘蓝色闻名的火山口湖。",
+      "在观景台欣赏湖泊和群山。",
+      "鹿儿岛的池田湖也是火山口湖。"
+    ],
+    tw: [
+      "摩周湖","以神秘藍色聞名的火山口湖。",
+      "在觀景台欣賞湖泊和群山。",
+      "鹿兒島的池田湖也是火山口湖。"
+    ],
+    ko: [
+      "마슈호","신비로운 푸른빛으로 유명한 칼데라호예요.",
+      "전망대에서 호수와 산을 감상해요.",
+      "가고시마의 이케다호도 칼데라호예요."
+    ],
+    fr: [
+      "Lac Mashu","Un lac de caldeira célèbre pour ses eaux bleues.",
+      "Admirez le lac et les montagnes depuis un belvédère.",
+      "Le lac Ikeda à Kagoshima est aussi un lac de caldeira."
+    ]
   },
+
   {
-    name: "屈斜路湖",
-    icon: "🦢",
-    x: 25,
-    y: 51,
-    description:
-      "日本最大のカルデラ湖だよ。広い湖と豊かな自然が魅力なんだ。",
-    activity:
-      "湖畔を散歩したり、季節に合わせてカヌーや野鳥観察を楽しんだりしよう。",
-    trivia:
-      "冬にはオオハクチョウが飛来するよ。九州とは違った冬の風景を楽しめるんだ。"
+    icon: "🦢", x: 24, y: 53,
+    ja: [
+      "屈斜路湖",
+      "日本最大のカルデラ湖。四季折々の自然が魅力だよ。",
+      "湖畔の散歩やカヌー、野鳥観察を楽しもう。",
+      "冬にはオオハクチョウが飛来するよ。"
+    ],
+    en: [
+      "Lake Kussharo","Japan's largest caldera lake.",
+      "Enjoy lakeside walks, canoeing or birdwatching.",
+      "Whooper swans visit during winter."
+    ],
+    zh: [
+      "屈斜路湖","日本最大的火山口湖。",
+      "体验湖畔散步、划独木舟和观鸟。",
+      "冬季有大天鹅飞来。"
+    ],
+    tw: [
+      "屈斜路湖","日本最大的火山口湖。",
+      "體驗湖畔散步、划獨木舟和賞鳥。",
+      "冬季有大天鵝飛來。"
+    ],
+    ko: [
+      "굿샤로호","일본에서 가장 큰 칼데라호예요.",
+      "호숫가 산책과 카누, 새 관찰을 즐겨요.",
+      "겨울에는 큰고니가 찾아와요."
+    ],
+    fr: [
+      "Lac Kussharo","Le plus grand lac de caldeira du Japon.",
+      "Promenez-vous, faites du canoë ou observez les oiseaux.",
+      "Des cygnes chanteurs y viennent en hiver."
+    ]
   },
+
   {
-    name: "硫黄山",
-    icon: "🌋",
-    x: 60,
-    y: 36,
-    description:
-      "アイヌ語でアトサヌプリとも呼ばれる火山。白い噴気と黄色い硫黄が特徴だよ。",
-    activity:
-      "安全な見学エリアから迫力ある噴気を観察しよう。立入禁止区域には入らないでね。",
-    trivia:
-      "鹿児島の桜島と同じように、北海道にも火山活動を身近に感じられる場所があるよ。"
+    icon: "🌋", x: 59, y: 35,
+    ja: [
+      "硫黄山",
+      "白い噴気と黄色い硫黄が特徴の火山だよ。",
+      "安全な見学エリアから迫力ある噴気を観察しよう。",
+      "鹿児島の桜島と同じように火山活動を身近に感じられるよ。"
+    ],
+    en: [
+      "Mount Io","A volcano with steaming vents and yellow sulfur.",
+      "Observe the steam from designated safe areas.",
+      "Like Sakurajima in Kagoshima, it showcases volcanic activity."
+    ],
+    zh: [
+      "硫黄山","拥有白色蒸汽和黄色硫磺的火山。",
+      "在安全的指定区域观察火山蒸汽。",
+      "和鹿儿岛的樱岛一样，可以感受火山活动。"
+    ],
+    tw: [
+      "硫黃山","擁有白色蒸氣和黃色硫磺的火山。",
+      "在安全的指定區域觀察火山蒸氣。",
+      "和鹿兒島的櫻島一樣，可以感受火山活動。"
+    ],
+    ko: [
+      "이오산","하얀 증기와 노란 유황이 특징인 화산이에요.",
+      "지정된 안전 구역에서 증기를 관찰해요.",
+      "가고시마의 사쿠라지마처럼 화산 활동을 느낄 수 있어요."
+    ],
+    fr: [
+      "Mont Io","Un volcan aux fumerolles et dépôts de soufre jaune.",
+      "Observez les fumerolles depuis les zones autorisées.",
+      "Comme Sakurajima à Kagoshima, il témoigne de l'activité volcanique."
+    ]
   },
+
   {
-    name: "川湯温泉",
-    icon: "♨️",
-    x: 57,
-    y: 19,
-    description:
-      "硫黄の香りが漂う温泉街だよ。酸性の強い温泉が特徴なんだ。",
-    activity:
-      "温泉施設でゆっくり温まったり、温泉街を散策したりしてみよう。",
-    trivia:
-      "鹿児島にも温泉がたくさんあるよね。川湯温泉では泉質の違いにも注目してみよう。"
+    icon: "♨️", x: 55, y: 18,
+    ja: [
+      "川湯温泉",
+      "硫黄の香りが漂う、酸性の強い温泉街だよ。",
+      "温泉施設でのんびり温まろう。",
+      "鹿児島の温泉と泉質の違いを比べてみよう。"
+    ],
+    en: [
+      "Kawayu Onsen","A hot spring town known for its acidic sulfur-rich waters.",
+      "Relax at a local hot spring facility.",
+      "Compare its water with hot springs in Kagoshima."
+    ],
+    zh: [
+      "川汤温泉","以酸性含硫温泉闻名的温泉街。",
+      "在当地温泉设施放松身心。",
+      "比较这里与鹿儿岛温泉的泉质。"
+    ],
+    tw: [
+      "川湯溫泉","以酸性含硫溫泉聞名的溫泉街。",
+      "在當地溫泉設施放鬆身心。",
+      "比較這裡與鹿兒島溫泉的泉質。"
+    ],
+    ko: [
+      "가와유 온천","산성이 강한 유황 온천으로 유명해요.",
+      "온천 시설에서 편안하게 쉬어요.",
+      "가고시마 온천과 수질을 비교해 보세요."
+    ],
+    fr: [
+      "Kawayu Onsen","Une station thermale aux eaux acides et soufrées.",
+      "Détendez-vous dans un établissement thermal.",
+      "Comparez ses eaux aux sources chaudes de Kagoshima."
+    ]
   },
+
   {
-    name: "摩周温泉",
-    icon: "🏡",
-    x: 68,
-    y: 83,
-    description:
-      "弟子屈町の市街地周辺にある温泉だよ。観光の拠点にもおすすめなんだ。",
-    activity:
-      "温泉で冒険の疲れを癒やして、道の駅などで地元のお土産も探してみよう。",
-    trivia:
-      "北海道の寒い季節に入る温泉は格別。九州とは違う気候の中で温泉を楽しめるよ。"
+    icon: "🏡", x: 65, y: 82,
+    ja: [
+      "摩周温泉",
+      "弟子屈町の市街地周辺にある温泉だよ。",
+      "温泉で疲れを癒やして、道の駅でお土産を探そう。",
+      "北海道の寒い季節に入る温泉も魅力的だよ。"
+    ],
+    en: [
+      "Mashu Onsen","Hot springs near central Teshikaga.",
+      "Relax in a hot spring and shop for local souvenirs.",
+      "Hot springs are especially inviting during Hokkaido's cold seasons."
+    ],
+    zh: [
+      "摩周温泉","位于弟子屈町中心附近的温泉。",
+      "泡温泉并购买当地纪念品。",
+      "北海道寒冷季节的温泉别有魅力。"
+    ],
+    tw: [
+      "摩周溫泉","位於弟子屈町中心附近的溫泉。",
+      "泡溫泉並購買當地紀念品。",
+      "北海道寒冷季節的溫泉別有魅力。"
+    ],
+    ko: [
+      "마슈 온천","데시카가 시가지 근처의 온천이에요.",
+      "온천에서 쉬고 지역 기념품을 찾아봐요.",
+      "추운 홋카이도에서 즐기는 온천은 특별해요."
+    ],
+    fr: [
+      "Mashu Onsen","Des sources chaudes près du centre de Teshikaga.",
+      "Profitez des bains et cherchez des souvenirs locaux.",
+      "Les bains chauds sont agréables pendant les saisons froides."
+    ]
   },
+
   {
-    name: "砂湯",
-    icon: "🏖️",
-    x: 41,
-    y: 31,
-    description:
-      "屈斜路湖の湖畔にある、砂を掘ると温泉が湧き出す不思議な場所だよ。",
-    activity:
-      "砂を掘って自分だけの足湯を作ってみよう。お湯の温度には気をつけてね。",
-    trivia:
-      "鹿児島の指宿には砂むし温泉があるよね。砂湯では砂を掘って温泉を楽しめるんだ。"
+    icon: "🏖️", x: 39, y: 25,
+    ja: [
+      "砂湯",
+      "湖畔の砂を掘ると温泉が湧き出す不思議な場所だよ。",
+      "砂を掘って足湯を作ろう。お湯の温度には注意してね。",
+      "鹿児島の指宿では砂むし温泉が楽しめるよね。"
+    ],
+    en: [
+      "Sunayu","Hot spring water rises when you dig into the lakeside sand.",
+      "Make a small footbath, checking the water temperature carefully.",
+      "Ibusuki in Kagoshima is famous for hot sand baths."
+    ],
+    zh: [
+      "砂汤","挖开湖畔的沙子就会涌出温泉。",
+      "挖一个小足浴池，注意水温。",
+      "鹿儿岛指宿以砂浴温泉闻名。"
+    ],
+    tw: [
+      "砂湯","挖開湖畔的沙子就會湧出溫泉。",
+      "挖一個小足浴池，注意水溫。",
+      "鹿兒島指宿以砂浴溫泉聞名。"
+    ],
+    ko: [
+      "스나유","호숫가 모래를 파면 온천수가 나와요.",
+      "물의 온도를 확인하고 족욕을 즐겨요.",
+      "가고시마 이부스키는 모래찜질 온천으로 유명해요."
+    ],
+    fr: [
+      "Sunayu","L'eau thermale jaillit en creusant le sable au bord du lac.",
+      "Créez un petit bain de pieds en vérifiant la température.",
+      "Ibusuki à Kagoshima est célèbre pour ses bains de sable chaud."
+    ]
   },
+
   {
-    name: "美幌峠",
-    icon: "⛰️",
-    x: 9,
-    y: 24,
-    description:
-      "弟子屈町に隣接する美幌町側の展望スポット。屈斜路湖を見渡せるよ。",
-    activity:
-      "展望台から広大な湖と山々の景色を楽しもう。記念写真にもおすすめ！",
-    trivia:
-      "北海道らしい広々とした景色が魅力。九州の山々とはまた違った風景を楽しめるよ。"
+    icon: "⛰️", x: 9, y: 25,
+    ja: [
+      "美幌峠",
+      "美幌町側にある、屈斜路湖を見渡せる展望スポットだよ。",
+      "展望台から広大な湖と山々を眺めよう。",
+      "北海道らしい雄大な景色を楽しめる場所なんだ。"
+    ],
+    en: [
+      "Bihoro Pass","A viewpoint in neighboring Bihoro overlooking Lake Kussharo.",
+      "Enjoy panoramic views of the lake and mountains.",
+      "Experience Hokkaido's vast natural landscapes."
+    ],
+    zh: [
+      "美幌峠","位于邻近美幌町的屈斜路湖观景地。",
+      "欣赏湖泊与群山的全景。",
+      "感受北海道广阔的自然风光。"
+    ],
+    tw: [
+      "美幌峠","位於鄰近美幌町的屈斜路湖觀景地。",
+      "欣賞湖泊與群山的全景。",
+      "感受北海道廣闊的自然風光。"
+    ],
+    ko: [
+      "비호로 고개","인근 비호로에 있는 굿샤로호 전망 명소예요.",
+      "호수와 산의 탁 트인 전망을 즐겨요.",
+      "홋카이도의 웅대한 자연을 느낄 수 있어요."
+    ],
+    fr: [
+      "Col de Bihoro","Un belvédère à Bihoro, dominant le lac Kussharo.",
+      "Admirez le panorama du lac et des montagnes.",
+      "Découvrez les vastes paysages naturels de Hokkaido."
+    ]
   }
 ];
 
-const visited = new Set();
-const map = document.getElementById("map");
-const bear = document.getElementById("bear");
-const stampBook = document.getElementById("stampBook");
+// =================================
+// ゲームの状態
+// =================================
 
-const reduceMotion = window.matchMedia(
+let lang = "ja";
+let selected = -1;
+let newStamp = false;
+
+const visited = new Set();
+
+const $ = id => document.getElementById(id);
+const map = $("map");
+const bear = $("bear");
+
+const reducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
 ).matches;
 
-// ==============================
-// 森のイラストを配置
-// ==============================
+// =================================
+// 森林・花畑の生成
+// =================================
 
-const trees = [
-  [35,340],[50,385],[85,410],[120,430],
-  [150,460],[190,480],[240,490],[270,450],
-  [310,500],[350,535],[390,490],[420,550],
-  [710,410],[750,380],[760,460],[720,510],
-  [680,550],[380,40],[340,65],[290,40],
-  [550,40],[580,65],[565,160],[395,270],
-  [415,310],[360,365],[80,100],[25,200],
-  [760,170],[770,320],[580,430],[610,460]
+const NS = "http://www.w3.org/2000/svg";
+
+function addArt(parent, symbol, x, y, scale, color) {
+  const item = document.createElementNS(NS, "use");
+  item.setAttribute("href", "#" + symbol);
+  item.setAttribute(
+    "transform",
+    `translate(${x} ${y}) scale(${scale})`
+  );
+  if (color) item.setAttribute("color", color);
+  parent.appendChild(item);
+}
+
+// 木々のまとまりを配置
+const groves = [
+  [45,360], [80,430], [165,455],
+  [245,495], [320,555], [490,590],
+  [720,540], [820,460], [855,365],
+  [420,55], [590,80], [430,300],
+  [550,350], [55,90], [850,160],
+  [110,555], [780,610]
 ];
 
-const forest = document.getElementById("forest");
+groves.forEach(([cx, cy], index) => {
+  for (let i = 0; i < 9; i++) {
+    const angle = i * 2.4;
+    const radius = 12 + i * 4;
 
-trees.forEach(([x,y]) => {
-  const tree = document.createElementNS(
-    "http://www.w3.org/2000/svg", "use"
-  );
-  tree.setAttribute("href", "#tree");
-  tree.setAttribute("x", x);
-  tree.setAttribute("y", y);
-  forest.appendChild(tree);
+    const x = cx + Math.cos(angle) * radius;
+    const y = cy + Math.sin(angle) * radius;
+
+    addArt(
+      $("forest"),
+      (i + index) % 3 === 0 ? "birch" : "pine",
+      x, y, .55 + (i % 4) * .13
+    );
+  }
 });
 
-// ==============================
-// 観光ピンとスタンプ帳を作成
-// ==============================
+// 色とりどりの花
+const flowerColors = [
+  "#e5a6cb", "#fff6d2", "#a59cdd", "#f1cb60"
+];
 
-spots.forEach((spot, index) => {
+const meadows = [
+  [160,520], [365,595], [680,455], [400,365]
+];
 
+meadows.forEach(([cx, cy]) => {
+  for (let i = 0; i < 30; i++) {
+    const x = cx + Math.cos(i * 2.4) * (8 + i);
+    const y = cy + Math.sin(i * 2.4) * (8 + i) * .5;
+
+    addArt(
+      $("flowers"), "flower", x, y,
+      .7 + (i % 3) * .15,
+      flowerColors[i % flowerColors.length]
+    );
+  }
+});
+
+// =================================
+// ピンとスタンプカード
+// =================================
+
+spots.forEach((spot, i) => {
   const pin = document.createElement("button");
+
   pin.className = "pin";
-  pin.id = "pin-" + index;
+  pin.id = "pin-" + i;
   pin.style.left = spot.x + "%";
   pin.style.top = spot.y + "%";
-  pin.setAttribute("aria-label", spot.name + "を発見する");
-  pin.setAttribute("aria-pressed", "false");
 
   pin.innerHTML = `
     <span class="pin-icon">${spot.icon}</span>
-    <span class="pin-name">${spot.name}</span>
+    <span class="pin-name"></span>
   `;
 
-  pin.addEventListener("click", () => visitSpot(index));
+  pin.addEventListener("click", () => visit(i));
   map.appendChild(pin);
 
   const stamp = document.createElement("div");
+
   stamp.className = "stamp";
-  stamp.id = "stamp-" + index;
+  stamp.id = "stamp-" + i;
 
   stamp.innerHTML = `
     <span class="stamp-icon">${spot.icon}</span>
-    ${spot.name}
+    <span class="stamp-name"></span>
   `;
 
-  stampBook.appendChild(stamp);
+  $("stampBook").appendChild(stamp);
 });
 
-// ==============================
-// 観光スポットを発見する
-// ==============================
+// =================================
+// 言語切り替え
+// =================================
 
-function visitSpot(index) {
+function render() {
+  const t = translations[lang];
 
-  const spot = spots[index];
-  const firstVisit = !visited.has(index);
+  document.documentElement.lang =
+    lang === "zh" ? "zh-Hans" :
+    lang === "tw" ? "zh-Hant" : lang;
 
-  // クマを移動
-  bear.style.left = spot.x + "%";
-  bear.style.top = Math.max(12, spot.y - 4) + "%";
+  document.title = t.title;
 
-  // 選択中のピンを変更
-  document.querySelectorAll(".pin").forEach(pin => {
-    pin.classList.remove("selected");
-    pin.setAttribute("aria-pressed", "false");
+  document.querySelectorAll("[data-t]").forEach(el => {
+    el.textContent = t[el.dataset.t];
   });
 
-  const selectedPin = document.getElementById("pin-" + index);
-  selectedPin.classList.add("selected", "visited");
-  selectedPin.setAttribute("aria-pressed", "true");
+  spots.forEach((spot, i) => {
+    const name = spot[lang][0];
+    const pin = $("pin-" + i);
+    const stamp = $("stamp-" + i);
 
-  // 観光情報を表示
-  document.getElementById("spotTitle").textContent =
-    spot.icon + " " + spot.name;
+    pin.querySelector(".pin-name").textContent = name;
+    pin.querySelector(".pin-icon").textContent =
+      visited.has(i) ? "⭐" : spot.icon;
 
-  document.getElementById("spotDescription").textContent =
-    "🐻「" + spot.description + "」";
+    pin.setAttribute("aria-label", name);
+    pin.setAttribute("aria-pressed", String(selected === i));
 
-  document.getElementById("spotActivity").textContent =
-    spot.activity;
+    pin.classList.toggle("visited", visited.has(i));
+    pin.classList.toggle("selected", selected === i);
 
-  document.getElementById("spotTrivia").textContent =
-    spot.trivia;
-
-  document.getElementById("spotDetails").hidden = false;
-
-  // スタンプを獲得
-  visited.add(index);
-
-  document.getElementById("stamp-" + index)
-    .classList.add("earned");
-
-  selectedPin.querySelector(".pin-icon").textContent = "⭐";
-
-  document.getElementById("reward").textContent =
-    firstVisit
-      ? "✨ 新しい観光スタンプをゲット！"
-      : "⭐ この場所は発見済みだよ！";
-
-  updateProgress();
-
-  // 全クリア判定
-  if (visited.size === spots.length && firstVisit) {
-    document.getElementById("clearPanel").hidden = false;
-    celebrate();
-  }
-
-  document.getElementById("info").scrollIntoView({
-    behavior: reduceMotion ? "auto" : "smooth",
-    block: "nearest"
+    stamp.querySelector(".stamp-name").textContent = name;
+    stamp.classList.toggle("earned", visited.has(i));
   });
-}
-
-// ==============================
-// 達成度と称号の更新
-// ==============================
-
-function updateProgress() {
 
   const count = visited.size;
-  const percent = count / spots.length * 100;
 
-  document.getElementById("progressBar").style.width =
-    percent + "%";
-
-  document.getElementById("progressText").textContent =
-    count + " / " + spots.length;
+  $("progressText").textContent = count + " / " + spots.length;
+  $("progressBar").style.width = count / spots.length * 100 + "%";
 
   document.querySelector(".progress")
     .setAttribute("aria-valuenow", count);
 
-  let level = "旅のはじまり";
+  document.querySelector(".progress")
+    .setAttribute("aria-label", t.progress);
 
-  if (count >= 1) level = "北海道の冒険者";
-  if (count >= 3) level = "弟子屈探検隊";
-  if (count >= 5) level = "温泉と自然の達人";
-  if (count === spots.length) level = "弟子屈観光マスター";
+  let rank = 0;
+  if (count >= 1) rank = 1;
+  if (count >= 3) rank = 2;
+  if (count >= 5) rank = 3;
+  if (count === spots.length) rank = 4;
 
-  document.getElementById("level").textContent =
-    "称号：" + level;
+  $("rank").textContent = "🏅 " + t.ranks[rank];
+
+  if (selected === -1) {
+    $("spotTitle").textContent = t.startTitle;
+    $("spotDescription").textContent = t.startMessage;
+    $("spotDetails").hidden = true;
+  } else {
+    const spot = spots[selected];
+    const data = spot[lang];
+
+    $("spotTitle").textContent = spot.icon + " " + data[0];
+    $("spotDescription").textContent = data[1];
+    $("spotActivity").textContent = data[2];
+    $("spotTrivia").textContent = data[3];
+    $("reward").textContent = newStamp ? t.reward : t.again;
+    $("spotDetails").hidden = false;
+  }
+
+  $("clearPanel").hidden = count !== spots.length;
 }
 
-// ==============================
-// 紙吹雪の演出
-// ==============================
+$("language").addEventListener("change", event => {
+  lang = event.target.value;
+  render();
+});
+
+// =================================
+// 観光地を発見
+// =================================
+
+function visit(index) {
+  selected = index;
+
+  const spot = spots[index];
+
+  newStamp = !visited.has(index);
+  visited.add(index);
+
+  bear.style.left = spot.x + "%";
+  bear.style.top = Math.max(12, spot.y - 4) + "%";
+
+  render();
+
+  if (visited.size === spots.length && newStamp) {
+    celebrate();
+  }
+
+  $("info").scrollIntoView({
+    behavior: reducedMotion ? "auto" : "smooth",
+    block: "nearest"
+  });
+}
+
+// =================================
+// 全クリア時の紙吹雪
+// =================================
 
 function celebrate() {
-
-  if (reduceMotion) return;
-
-  const container = document.getElementById("confetti");
+  if (reducedMotion) return;
 
   const colors = [
-    "#f6ce58",
-    "#80bd6b",
-    "#6abbd9",
-    "#ed8b91",
-    "#c5a2e5"
+    "#e9c35c", "#83b96b", "#8ad1df",
+    "#e9a7c3", "#b9a6e2"
   ];
 
   for (let i = 0; i < 100; i++) {
-
     const paper = document.createElement("div");
+
     paper.className = "paper";
-
     paper.style.left = Math.random() * 100 + "%";
+    paper.style.background = colors[i % colors.length];
 
-    paper.style.background =
-      colors[Math.floor(Math.random() * colors.length)];
-
+    paper.style.animationDelay = Math.random() + "s";
     paper.style.animationDuration =
-      2 + Math.random() * 3 + "s";
-
-    paper.style.animationDelay =
-      Math.random() * 0.8 + "s";
+      2.5 + Math.random() * 2 + "s";
 
     paper.style.setProperty(
       "--drift",
-      (Math.random() * 300 - 150) + "px"
+      Math.random() * 300 - 150 + "px"
     );
 
-    container.appendChild(paper);
+    $("confetti").appendChild(paper);
 
-    setTimeout(() => paper.remove(), 6500);
+    setTimeout(() => paper.remove(), 6000);
   }
 }
 
-// ==============================
-// ゲームをリセット
-// ==============================
+// =================================
+// リセット
+// =================================
 
-document.getElementById("resetButton")
-  .addEventListener("click", () => {
+$("reset").addEventListener("click", () => {
+  visited.clear();
+  selected = -1;
+  newStamp = false;
 
-    visited.clear();
+  bear.style.left = "65%";
+  bear.style.top = "91%";
 
-    spots.forEach((spot, index) => {
+  $("confetti").replaceChildren();
 
-      const pin = document.getElementById("pin-" + index);
+  render();
 
-      pin.classList.remove("visited", "selected");
-      pin.setAttribute("aria-pressed", "false");
-      pin.querySelector(".pin-icon").textContent = spot.icon;
-
-      document.getElementById("stamp-" + index)
-        .classList.remove("earned");
-    });
-
-    bear.style.left = "68%";
-    bear.style.top = "87%";
-
-    document.getElementById("spotTitle").textContent =
-      "🧭 冒険をはじめよう！";
-
-    document.getElementById("spotDescription").textContent =
-      "地図にある7つのピンを押して、弟子屈町の魅力を発見しよう！";
-
-    document.getElementById("spotDetails").hidden = true;
-    document.getElementById("clearPanel").hidden = true;
-    document.getElementById("confetti").replaceChildren();
-
-    updateProgress();
-
-    window.scrollTo({
-      top: 0,
-      behavior: reduceMotion ? "auto" : "smooth"
-    });
+  window.scrollTo({
+    top: 0,
+    behavior: reducedMotion ? "auto" : "smooth"
   });
+});
+
+// 初期表示
+render();
 
 </script>
-
 </body>
 </html>
